@@ -1,0 +1,30 @@
+{
+  "name": "basic-blog-api",
+  "version": "1.0.0",
+  "description": "An application server that returns text through REST using Express JS.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha tests/testIndex.js && mocha tests/testRoutersBlog.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jcayne/basic-blog-api.git"
+  },
+  "author": "jcayne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcayne/basic-blog-api/issues"
+  },
+  "homepage": "https://github.com/jcayne/basic-blog-api#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^3.2.0",
+    "request": "^2.79.0"
+  }
+}

@@ -1,0 +1,59 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Basic Blog API
+  description: An application server that returns text through REST using Express JS.
+host: localhost:3100
+basePath: /api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /blog:
+    post:
+      description: Creates a new blog post entry.
+      operationId: newEntry
+      produces:
+        - application/json
+      parameters:
+        - name: text
+          in: body
+          description: Text to add for the new entry.
+          required: true
+          schema:
+            $ref: '#/definitions/newEntry'
+      responses:
+        '200':
+          description: entry response
+          schema:
+            $ref: '#/definitions/newEntry'
+        '400':
+          description: missing parameter
+          schema:
+            $ref: '#/definitions/errorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+definitions:
+  newEntry:
+    type: object
+    required:
+      - text
+    properties:
+      text:
+        type: string
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
