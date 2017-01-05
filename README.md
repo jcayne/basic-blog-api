@@ -12,7 +12,11 @@ The API for a basic blog that displays text and allows for comments.
 
 
 # Release notes
+- [v1.0.1](./README.md/#v101)
 - [v1.0.0](./README.md/#v100)
+
+## v1.0.1
+Updates the REST API to store the passed text in a [Cloudant NoSQL Database](https://cloudant.com/) using [nano](https://github.com/dscape/nano). The stored document contains the text, along with the timestamp.
 
 ## v1.0.0
 A basic REST API running on [Node.js](https://nodejs.org) using the [Express](http://expressjs.com) web application framework to respond to a POST request sent to [http://localhost:3100](http://localhost:3100) with a `200` response code and a text body of the provided text. Unit testing completed using the [Mocha JavaScript](https://mochajs.org) test framework. Swagger documentation specifications are hosted at [http://localhost:3100/swagger/swagger.json](http://localhost:3100/swagger/swagger.json).

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha tests/testIndex.js && mocha tests/testRoutersBlog.js"
+    "test": "mocha tests/testIndex.js && mocha tests/testRoutersBlog.js && mocha tests/testMiddlwareDatabase.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "nconf": "^0.8.4"
   },
   "devDependencies": {
     "assert": "^1.4.1",

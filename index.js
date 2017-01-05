@@ -6,6 +6,9 @@ var compression = require('compression');
 var express = require('express');
 var path = require('path');
 
+// Configure the database.
+require('./middleware/database').setup();
+
 var app = express();
 
 app.use(compression());

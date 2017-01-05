@@ -1,3 +1,4 @@
+var database = require('../middleware/database');
 var express = require('express');
 var router = express.Router();
 
@@ -14,7 +15,14 @@ router.post('/', function(req, res) {
     return res.status(400).send({code: '400', message: 'Missing required parameters.'});
   }
 
-  res.status(200).send({text: req.body.text});
+  database.insert(req.body.text, function(err, response) {
+    if(err) {
+      return res.status(response.code).send(response);
+    }
+    return res.status(200).send({text: req.body.text});
+  });
+
+
 });
 
 module.exports = router;
