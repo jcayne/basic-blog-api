@@ -8,6 +8,8 @@ exports.setup = function() {
      .env()
      .file({ file: 'local-config.json' });
 
+  nconf.env('__');
+
   // Create the database
   var nano = require('nano')(nconf.get('cloudant:url'));
   nano.db.create('basic-blog');
