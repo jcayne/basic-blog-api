@@ -12,8 +12,12 @@ The API for a basic blog that displays text and allows for comments.
 
 
 # Release notes
+- [v1.0.2](./README.md/#v102)
 - [v1.0.1](./README.md/#v101)
 - [v1.0.0](./README.md/#v100)
+
+## v1.0.2
+The REST API now stores the posts by username to allow for retrieving prior posts.
 
 ## v1.0.1
 Updates the REST API to store the passed text in a [Cloudant NoSQL Database](https://cloudant.com/) using [nano](https://github.com/dscape/nano). The stored document contains the text, along with the timestamp.

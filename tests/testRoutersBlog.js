@@ -42,6 +42,7 @@ describe('Test Blog Router', function() {
         uri: url,
         method: 'post',
         body: {
+          username: 'test',
           text: 'Some text'
         },
         json: true,
@@ -49,7 +50,9 @@ describe('Test Blog Router', function() {
       };
       request(options, function(error, response, body) {
         assert.equal(response.statusCode, 200);
-        assert.equal(body.text, 'Some text');
+        assert.equal(body.text.length, 1);
+        assert.ok(body.text[0].modified);
+        assert.equal(body.text[0].text, 'Some text');
         done();
       });
     });

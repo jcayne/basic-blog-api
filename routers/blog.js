@@ -1,4 +1,4 @@
-var database = require('../middleware/database');
+var database = require('../client/database');
 var express = require('express');
 var router = express.Router();
 
@@ -15,11 +15,36 @@ router.post('/', function(req, res) {
     return res.status(400).send({code: '400', message: 'Missing required parameters.'});
   }
 
-  database.insert(req.body.text, function(err, response) {
+  if(!req.body.username) {
+    return res.status(400).send({code: '400', message: 'An invalid username was provided.'});
+  }
+
+  database.insert(req.body.text, req.body.username, function(err, response) {
     if(err) {
       return res.status(response.code).send(response);
     }
-    return res.status(200).send({text: req.body.text});
+    if(req.body.displayAll) {
+      return database.getAllDocumentsByUsername(req.body.username, function(err, resGet) {
+
+        // Return the array of text.
+        return res.status(200).send({text: resGet});
+      });
+
+    }
+    // response is the doc._id from the insert.
+    return database.get(response.id, function(err, resGet) {
+      if(err) {
+        return res.status(response.code).send(response);
+      }
+
+      // Make the response similar to a retrieve all to ease the parsing on the UI side.
+      var result = [];
+      result.push({
+        modified: resGet.modified,
+        text: resGet.text
+      });
+      return res.status(200).send({text: result});
+    });
   });
 
 

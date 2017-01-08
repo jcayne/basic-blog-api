@@ -7,7 +7,7 @@ var express = require('express');
 var path = require('path');
 
 // Configure the database.
-require('./middleware/database').setup();
+require('./client/database').setup();
 
 var app = express();
 
