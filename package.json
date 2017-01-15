@@ -1,6 +1,6 @@
 {
   "name": "basic-blog-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An application server that returns text through REST using Express JS.",
   "main": "index.js",
   "scripts": {
@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/jcayne/basic-blog-api#readme",
   "dependencies": {
+    "address-validator": "^0.2.2",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "express": "^4.14.0",
     "nano": "^6.2.0",
-    "nconf": "^0.8.4"
+    "nconf": "^0.8.4",
+    "weather-js": "^1.0.2"
   },
   "devDependencies": {
     "assert": "^1.4.1",

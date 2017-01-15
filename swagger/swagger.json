@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "1.0.3",
+        "version": "1.0.4",
         "title": "Basic Blog API",
         "description": "An application server that returns text through REST using Express JS."
     },
@@ -17,6 +17,46 @@
         "application/json"
     ],
     "paths": {
+        "/blog": {
+            "post": {
+                "description": "Creates a new blog post entry.",
+                "operationId": "newEntry",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "text",
+                        "in": "body",
+                        "description": "Text to add for the new entry.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/newEntry"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "entry response",
+                        "schema": {
+                            "$ref": "#/definitions/entryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "missing parameter",
+                        "schema": {
+                            "$ref": "#/definitions/errorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorModel"
+                        }
+                    }
+                }
+            }
+        },
         "/blog/{id}": {
             "patch": {
                 "description": "Updates a blost post entry.",
@@ -28,13 +68,21 @@
                     {
                         "in": "path",
                         "name": "id",
-                        "description": "The id of the post.",
-                        "required": true
+                        "description": "The ID of the entry.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "text",
+                        "description": "Text to add for the new entry.",
+                        "required": true,
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "204": {
-                        "description": "on successful update"
+                        "description": "On successful update"
                     },
                     "400": {
                         "description": "missing parameter",
@@ -57,12 +105,17 @@
             "type": "object",
             "required": [
                 "username",
+                "location",
                 "text"
             ],
             "properties": {
                 "username": {
                     "type": "string",
                     "description": "The username that owns the text."
+                },
+                "location": {
+                    "type": "string",
+                    "description": "The location where the user is located."
                 },
                 "text": {
                     "type": "string",
@@ -84,6 +137,7 @@
             "type": "object",
             "required": [
                 "modified",
+                "location",
                 "text"
             ],
             "properties": {
@@ -95,6 +149,30 @@
                     "type": "string",
                     "format": "date",
                     "description": "The timestamp of when the text was created."
+                },
+                "location": {
+                    "type": "object",
+                    "description": "User's location information when they created the post.",
+                    "required": [
+                        "city",
+                        "latitude",
+                        "longitude",
+                        "temperature"
+                    ],
+                    "properties": {
+                        "city": {
+                            "type": "string"
+                        },
+                        "latitude": {
+                            "type": "string"
+                        },
+                        "longitude": {
+                            "type": "string"
+                        },
+                        "temperature": {
+                            "type": "string"
+                        }
+                    }
                 },
                 "text": {
                     "type": "string",

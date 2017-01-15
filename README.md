@@ -12,10 +12,15 @@ The API for a basic blog that displays text and allows for comments.
 
 
 # Release notes
+- [v1.0.4](./README.md/#v104)
 - [v1.0.3](./README.md/#v103)
 - [v1.0.2](./README.md/#v102)
 - [v1.0.1](./README.md/#v101)
 - [v1.0.0](./README.md/#v100)
+
+## v1.0.4
+Allow for the user to enter their location on initial entry, store the corresponding user's city, city's latitude and longitude, and current temperature.
+Known issues: Entering an invalid location can lead to the error `TypeError: Cannot read property 'weatherdata' of null`. The error is masked by catching it, though the proper approach is to crash. This is a [known issue](https://github.com/devfacet/weather/issues/4) that should be handled in the dependency.
 
 ## v1.0.3
 Added support for including replies on stored text.

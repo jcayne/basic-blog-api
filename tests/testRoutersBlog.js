@@ -43,6 +43,7 @@ describe('Test Blog Router', function() {
         method: 'post',
         body: {
           username: 'test',
+          location: 'Rome, Italy',
           text: 'Some text'
         },
         json: true,
@@ -53,6 +54,10 @@ describe('Test Blog Router', function() {
         assert.equal(body.text.length, 1);
         assert.ok(body.text[0].id);
         assert.ok(body.text[0].modified);
+        assert.equal(body.text[0].location.city, 'Rome, Italy');
+        assert.ok(body.text[0].location.latitude);
+        assert.ok(body.text[0].location.longitude);
+        assert.ok(body.text[0].location.temperature);
         assert.equal(body.text[0].text, 'Some text');
         assert.equal(body.text[0].replies.length, 0);
         var updateOptions = {

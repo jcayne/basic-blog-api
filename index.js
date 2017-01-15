@@ -24,6 +24,20 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use('/api/blog', blogRouter); // Use the blog router to handle these requests
 app.use('/swagger', express.static(path.join(__dirname, '/swagger'), {index: false, redirect: false}));
 
+app.on('error', function(parent) {
+  console.error('An error event occurred: ' + parent);
+});
+
+process.on('uncaughtException', function(err) {
+    // handle the error safely
+    console.log('An uncaughtException occurred: ' + err);
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  return res.status(500).send({code:500, message:'An internal error occurred.'});
+});
+
 var PORT = process.env.PORT ? process.env.PORT : 3100;
 app.listen(PORT, function(){
   console.log('The server has started.');

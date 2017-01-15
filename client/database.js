@@ -24,19 +24,27 @@ exports.setup = function() {
     }, '_design/text', function (err, res) {
       // Ignore if the view already exists.
       if(err && err.statusCode !== 409) {
+        console.error('Error setting up database: ' + err);
         throw new Error("Setup error.");
       }
    });
 
 }
 
-exports.insert = function(text, username, callback) {
+exports.insert = function(text, username, location, callback) {
   if(!db) {
     return callback(true, {code: '500', message: 'An internal error occurred.'});
   }
+
+  if(!text || !username || !location || !location.city || !location.longitude ||
+    !location.latitude || !location.temperature) {
+    return callback(true, {code: '500', message: 'An internal error occurred.'});
+  }
+
   db.insert({
     username: username,
     modified: Date.now(),
+    location: location,
     text: text,
     replies: []
   }, function(err, body) {
@@ -58,6 +66,7 @@ exports.update = function(doc, replies, callback) {
     _rev: doc._rev,
     username: doc.username,
     modified: doc.modified,
+    location: doc.location,
     text: doc.text,
     replies: replies
   }, function(err, body) {
@@ -112,6 +121,7 @@ exports.getAllDocumentsByUsername = function(username, callback) {
       result.push({
         id: body.rows[i].doc._id,
         modified: body.rows[i].doc.modified,
+        location: body.rows[i].doc.location,
         text: body.rows[i].doc.text,
         replies: body.rows[i].doc.replies
       });

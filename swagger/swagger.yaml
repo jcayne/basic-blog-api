@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '1.0.3'
+  version: '1.0.4'
   title: Basic Blog API
   description: An application server that returns text through REST using Express JS.
 host: localhost:3100
@@ -72,11 +72,15 @@ definitions:
     type: object
     required:
       - username
+      - location
       - text
     properties:
       username:
         type: string
         description: The username that owns the text.
+      location:
+        type: string
+        description: The location where the user is located.
       text:
         type: string
         description: The text to store.
@@ -91,6 +95,7 @@ definitions:
     type: object
     required:
       - modified
+      - location
       - text
     properties:
       id:
@@ -100,6 +105,23 @@ definitions:
         type: string
         format: date
         description: The timestamp of when the text was created.
+      location:
+        type: object
+        description: User's location information when they created the post.
+        required:
+          - city
+          - latitude
+          - longitude
+          - temperature
+        properties:
+          city:
+            type: string
+          latitude:
+            type: string
+          longitude:
+            type: string
+          temperature:
+            type: string
       text:
         type: string
         description: The text that was stored.
