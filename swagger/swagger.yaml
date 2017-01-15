@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '1.0.2'
+  version: '1.0.3'
   title: Basic Blog API
   description: An application server that returns text through REST using Express JS.
 host: localhost:3100
@@ -38,6 +38,35 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/errorModel'
+
+  /blog/{id}:
+    patch:
+      description: Updates a blost post entry.
+      operationId: updateEntry
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: The ID of the entry.
+          required: true
+          type: string
+        - in: formData
+          name: text
+          description: Text to add for the new entry.
+          required: true
+          type: string
+      responses:
+        '204':
+          description: On successful update
+        '400':
+          description: missing parameter
+          schema:
+            $ref: '#/definitions/errorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
 definitions:
   newEntry:
     type: object
@@ -64,6 +93,9 @@ definitions:
       - modified
       - text
     properties:
+      id:
+        type: string
+        description: The unique ID of the posted entry.
       modified:
         type: string
         format: date
@@ -71,6 +103,11 @@ definitions:
       text:
         type: string
         description: The text that was stored.
+      replies:
+        type: array
+        items:
+          type: string
+          description: The replies to the text entry.
   errorModel:
     type: object
     required:

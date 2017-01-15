@@ -37,13 +37,34 @@ exports.insert = function(text, username, callback) {
   db.insert({
     username: username,
     modified: Date.now(),
-    text: text
+    text: text,
+    replies: []
   }, function(err, body) {
     if(err) {
       console.error('Insert failed with error: ' + JSON.stringify(err));
       return callback(true, {code: '400', message: 'An error occurred storing the text.'});
     }
 
+    return callback(false, body);
+  });
+}
+
+exports.update = function(doc, replies, callback) {
+  if(!db) {
+    return callback(true, {code: '500', message: 'An internal error occurred.'});
+  }
+  db.insert({
+    _id: doc._id,
+    _rev: doc._rev,
+    username: doc.username,
+    modified: doc.modified,
+    text: doc.text,
+    replies: replies
+  }, function(err, body) {
+    if(err) {
+      console.error('Update failed with error: ' + JSON.stringify(err));
+      return callback(true, {code: '400', message: 'An error occurred updating the replies.'});
+    }
     return callback(false, body);
   });
 }
@@ -89,8 +110,10 @@ exports.getAllDocumentsByUsername = function(username, callback) {
     var result = [];
     for(var i = 0; i < body.rows.length; i++) {
       result.push({
+        id: body.rows[i].doc._id,
         modified: body.rows[i].doc.modified,
-        text: body.rows[i].doc.text
+        text: body.rows[i].doc.text,
+        replies: body.rows[i].doc.replies
       });
     }
     return callback(false, result);

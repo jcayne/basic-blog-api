@@ -13,6 +13,7 @@ describe('Test Database Middleware', function() {
   });
 
   describe('#insertGetGetAll()', function() {
+    this.timeout(6000);
     it('check for error', function(done) {
       database.setup();
       database.insert("text", "user", function(err, response) {
@@ -30,31 +31,40 @@ describe('Test Database Middleware', function() {
           // Retrieve the document
           database.get(docId, function(err, response) {
             assert.equal(err, false);
-            assert.equal(response.username, "user");
+            assert.equal(response._id, docId);
             assert.equal(response.text, "text");
             assert.ok(response.modified);
+            assert.equal(response.replies.length, 0);
+            // Used to update the doc.
+            var doc = response;
 
-            // Retrieve all documents by username
-            database.getAllDocumentsByUsername("user", function(err, response) {
-              assert.equal(err, false);
-              assert.equal(response.length, 2);
-              assert.equal(response[0].text, "text");
-              assert.ok(response[0].modified);
-              assert.equal(response[1].text, "text1");
-              assert.ok(response[1].modified);
+            database.update(doc, ["An update"], function(err, response) {
+              docRev = response.rev;
 
-              // Clean up
-              database.delete(docId, docRev, function(err, response) {
+              // Retrieve all documents by username
+              database.getAllDocumentsByUsername("user", function(err, response) {
                 assert.equal(err, false);
-                assert.ok(response);
+                assert.equal(response.length, 2);
+                assert.ok(response[0].id);
+                assert.equal(response[0].text, "text");
+                assert.ok(response[0].modified);
+                assert.equal(response[0].replies.length, 1);
+                assert.ok(response[1].id);
+                assert.equal(response[1].text, "text1");
+                assert.ok(response[1].modified);
+                assert.equal(response[1].replies.length, 0);
 
-                database.delete(doc1Id, doc1Rev, function(err, response) {
+                // Clean up
+                database.delete(docId, docRev, function(err, response) {
                   assert.equal(err, false);
-                  assert.ok(response);
-                  done();
-                });
-              });
 
+                  database.delete(doc1Id, doc1Rev, function(err, response) {
+                    assert.equal(err, false);
+                    done();
+                  });
+                });
+
+              });
             });
           });
         });

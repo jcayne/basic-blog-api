@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "1.0.2",
+        "version": "1.0.3",
         "title": "Basic Blog API",
         "description": "An application server that returns text through REST using Express JS."
     },
@@ -17,30 +17,24 @@
         "application/json"
     ],
     "paths": {
-        "/blog": {
-            "post": {
-                "description": "Creates a new blog post entry.",
-                "operationId": "newEntry",
+        "/blog/{id}": {
+            "patch": {
+                "description": "Updates a blost post entry.",
+                "operationId": "updateEntry",
                 "produces": [
                     "application/json"
                 ],
                 "parameters": [
                     {
-                        "name": "text",
-                        "in": "body",
-                        "description": "Text to add for the new entry.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/newEntry"
-                        }
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id of the post.",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "entry response",
-                        "schema": {
-                            "$ref": "#/definitions/entryResponse"
-                        }
+                    "204": {
+                        "description": "on successful update"
                     },
                     "400": {
                         "description": "missing parameter",
@@ -93,6 +87,10 @@
                 "text"
             ],
             "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "The unique ID of the posted entry."
+                },
                 "modified": {
                     "type": "string",
                     "format": "date",
@@ -101,6 +99,13 @@
                 "text": {
                     "type": "string",
                     "description": "The text that was stored."
+                },
+                "replies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "The replies to the text entry."
+                    }
                 }
             }
         },

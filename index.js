@@ -11,6 +11,14 @@ require('./client/database').setup();
 
 var app = express();
 
+// Allow cross origin communication.
+app.use((req, res, next) => {
+  var origin = process.env.NODE_ENV === 'production' ? 'http://basic-blog-ui.mybluemix.net' : 'http://localhost:3000';
+  res.header('Access-Control-Allow-Origin', origin);
+  res.header('Access-Control-Allow-Methods', 'POST,OPTIONS,PATCH');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 app.use(compression());
 app.use(bodyParser.json()); // for parsing application/json
 app.use('/api/blog', blogRouter); // Use the blog router to handle these requests

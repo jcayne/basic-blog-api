@@ -1,6 +1,6 @@
 {
   "name": "basic-blog-api",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "An application server that returns text through REST using Express JS.",
   "main": "index.js",
   "scripts": {

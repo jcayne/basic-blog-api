@@ -12,9 +12,13 @@ The API for a basic blog that displays text and allows for comments.
 
 
 # Release notes
+- [v1.0.3](./README.md/#v103)
 - [v1.0.2](./README.md/#v102)
 - [v1.0.1](./README.md/#v101)
 - [v1.0.0](./README.md/#v100)
+
+## v1.0.3
+Added support for including replies on stored text.
 
 ## v1.0.2
 The REST API now stores the posts by username to allow for retrieving prior posts.

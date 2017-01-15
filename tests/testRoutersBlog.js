@@ -2,7 +2,7 @@ var assert = require('assert');
 var request = require('request');
 
 describe('Test Blog Router', function() {
-  describe('#postBlog()', function() {
+  describe('#apiBlog()', function() {
     var url = process.env.NODE_ENV === 'test' ? 'http://basic-blog-api.mybluemix.net/api/blog' : 'http://localhost:3100/api/blog';
     it('check for error with no body', function(done) {
       var options = {
@@ -37,7 +37,7 @@ describe('Test Blog Router', function() {
       });
     });
 
-    it('check response', function(done) {
+    it('check response and update', function(done) {
       var options = {
         uri: url,
         method: 'post',
@@ -51,9 +51,23 @@ describe('Test Blog Router', function() {
       request(options, function(error, response, body) {
         assert.equal(response.statusCode, 200);
         assert.equal(body.text.length, 1);
+        assert.ok(body.text[0].id);
         assert.ok(body.text[0].modified);
         assert.equal(body.text[0].text, 'Some text');
-        done();
+        assert.equal(body.text[0].replies.length, 0);
+        var updateOptions = {
+          uri: url + '/' + body.text[0].id,
+          method: 'patch',
+          body: {
+            text: 'An update'
+          },
+          json: true,
+          gzip: true
+        };
+        request(updateOptions, function(error, response, body) {
+          assert.equal(response.statusCode, 204);
+          done();
+        });
       });
     });
   });
