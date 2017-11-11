@@ -94,9 +94,11 @@ definitions:
   textEntry:
     type: object
     required:
+      - id
       - modified
       - location
       - text
+      - replies
     properties:
       id:
         type: string

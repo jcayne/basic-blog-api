@@ -136,9 +136,11 @@
         "textEntry": {
             "type": "object",
             "required": [
+                "id",
                 "modified",
                 "location",
-                "text"
+                "text",
+                "replies"
             ],
             "properties": {
                 "id": {

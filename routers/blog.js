@@ -28,7 +28,7 @@ router.post('/', function(req, res) {
     var city = result[0].location.name;
     var zipcode = result[0].location.zipcode;
     if(!zipcode && city && !city.toLowerCase().includes(req.body.location.toLowerCase())) {
-      return res.status(400).send({code: '400', message:'The location could not be determined.'});
+      return res.status(400).send({code: '400', message:'The location could not be determined. The closest match was: ' + city});
     }
 
     var location = {
